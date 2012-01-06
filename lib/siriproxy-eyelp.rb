@@ -138,8 +138,8 @@ listen_for /suche (.*)/i do |phrase|
 	part = ma.pre_match.strip
 	dos = "http://api.yelp.com/business_review_search?term=" + part + "&location=" + part2 + "&limit=15&ywsid=" + $ywsid.to_s
 	ss = "in"
-	elsif phrase.match(/( global )/) # catching global search: suche global *   :Range 25
-	ma = phrase.match(/( global )/)	
+	elsif phrase.match(/( in der Umgebung )/) # catching global search: suche global *   :Range 25
+	ma = phrase.match(/( in der Umgebung )/)	
 	part = ma.post_match.strip
 	dos = "http://api.yelp.com/business_review_search?term=" + part.to_s + "&lat=" + $mapla.to_s + "&long=" + $maplo.to_s + "&radius=25&limit=25&ywsid=" + $ywsid.to_s
 	else	# normal search: suche *   :Range 5
