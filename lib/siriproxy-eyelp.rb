@@ -81,7 +81,7 @@ class SiriProxy::Plugin::Eyelp < SiriProxy::Plugin
     def initialize(config)
     	#####################################
     	                                    #
-        $ywsid = "XXXXXXXXXXXXXXXXXXXXXX"   # insert your ywsid key here
+        $ywsid = "bKOd_RddKcCYmaBIz4B2RQ"   # insert your ywsid key here
                                             #
         #####################################
         # THIS KEY IS NEEDED - if you dont have one, request a free trial key here
@@ -207,50 +207,7 @@ listen_for /suche (.*)/i do |phrase|
 end
 end
 
-# reading from a local JSON File ---- FOR TESTING
-listen_for /(testi|test eins)/i do    
-	
-	str = "Restaurant Il Sole Wiener Neustadt"
-	
-	if str.match(/(hier )/)
-	ma = str.match(/(hier )/)
-	print ma.post_match
-	elsif str.match(/(in )/)
-	mb = str.match(/(in )/)	
-	print mb.pre_match.strip
-	print "------"
-	print mb.post_match.strip
-	end
-	
-	json = File.open("plugins/siriproxy-eyelp/jstest", "rb:utf-8")
-	empl = json.read
-	json.close
-	empl.chop
-	empl.reverse
-	empl.chop
-	empl.reverse
-	empl.gsub('\"', '"')
-	empl =JSON.parse(empl)
-	busi = empl['businesses']
-	busi = Siren.query "$[ /@.distance ]", busi
-	x = 0
-	add_views = SiriAddViews.new
-    add_views.make_root(last_ref_id)
-    map_snippet = SiriMapItemSnippet.new(true)
-	
-	busi.each do |data|
-		siri_location = SiriLocation.new(data['name'], data['address1'], data['city'], data['state_code'], data['country_code'], data['zip'].to_s , data['latitude'].to_s , data['longitude'].to_s) 
-    	map_snippet.items << SiriMapItem.new(label=data['name'], location=siri_location, detailType="FRIEND_ITEM") # BUSINESS_ITEM")
- 		x += 1
- 	end
-	say "Ich habe " + x.to_s + " Einträge gefunden"
-	print map_snippet.items
-    utterance = SiriAssistantUtteranceView.new("")
-    add_views.views << utterance
-    add_views.views << map_snippet
-    send_object add_views #send_object takes a hash or a SiriObject object
-	request_completed
-end
+
 
 
 # safes position in a global variable
