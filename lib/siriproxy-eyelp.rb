@@ -114,7 +114,7 @@ class SiriProxy::Plugin::Eyelp < SiriProxy::Plugin
     	$mapla = object["properties"]["latitude"]
 	end 
 
-listen_for /suche (.*)/i do |phrase|
+listen_for /finde (.*)/i do |phrase|
 	ss = ""
 	#if phrase.match(/(ein )/)  # cleaning searchstring: eg:  ein hotel = hotel
 	phrase = phrase.insert(0, " ")
@@ -171,9 +171,9 @@ listen_for /suche (.*)/i do |phrase|
 	
 	if busi.empty? == true
 		if ss == "in"
-		say "Keine Einträge in Yelp für '" + part + "' in '" + part2 +"' gefunden."
+		say "Keine Einträge für '" + part + "' in '" + part2 +"' gefunden."
 		else
-		say "Keine Einträge in Yelp für '" + part + "' gefunden."
+		say "Keine Einträge für '" + part + "' gefunden."
 		end
 	else
 	if ss == "in" #no sorting if city-search - to get best query on top
